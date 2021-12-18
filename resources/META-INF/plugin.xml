@@ -25,7 +25,10 @@ Sources: <a href="https://github.com/exbin/exbin-intellij-plugin">https://github
     <depends>com.intellij.modules.platform</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <!-- Add your extensions here -->
+        <fileType name="XBUP File" implementationClass="org.exbin.xbup.intellij.XbupFileType" fieldName="INSTANCE" language="" extensions="xb"/>
+        <virtualFileSystem implementationClass="org.exbin.xbup.intellij.XbupFileSystem" key="xbup" physical="false"/>
+        <fileEditorProvider implementation="org.exbin.xbup.intellij.XbupFileEditorProvider"/>
+        <fileEditorProvider implementation="org.exbin.xbup.intellij.XbupNativeFileEditorProvider"/>
     </extensions>
 
     <actions>
