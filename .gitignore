@@ -8,5 +8,5 @@
 .gradle
 out/
 *~
-xbup-intellij-plugin.jar
-xbup-intellij-plugin.zip
+exbin-intellij-plugin.jar
+exbin-intellij-plugin.zip

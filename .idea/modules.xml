@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/xbup-intellij-plugin.iml" filepath="$PROJECT_DIR$/xbup-intellij-plugin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/exbin-intellij-plugin.iml" filepath="$PROJECT_DIR$/exbin-intellij-plugin.iml" />
     </modules>
   </component>
 </project>

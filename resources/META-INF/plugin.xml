@@ -1,11 +1,11 @@
 <idea-plugin>
-    <id>org.exbin.xbup.intellij</id>
-    <name>XBUP Editor</name>
+    <id>org.exbin.intellij</id>
+    <name>ExBin Tools</name>
     <version>0.2.0.snapshot</version>
     <vendor email="exbinproject@gmail.com" url="https://exbin.org">ExBin Project</vendor>
 
     <description><![CDATA[
-<p>Experimental support for XBUP project.</p>
+<p>Experimental support for ExBin project.</p>
 
 <h1>Links</h1>
 Homepage: <a href="https://xbup.exbin.org/editor/">https://xbup.exbin.org/editor/</a><br/>

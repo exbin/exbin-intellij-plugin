@@ -1,16 +1,16 @@
-XBUP - eXtensible Binary Universal Protocol - Plugin for IntelliJ Platform
-==========================================================================
+ExBin - Extensible Binary Tools - Plugin for IntelliJ Platform
+==============================================================
 
-Experimental support for XBUP project as a plugin module for IntelliJ platform.
+Experimental support for ExBin project as plugin module for IntelliJ platform.
 
-Homepage: https://xbup.exbin.org/editor/  
+Homepage: https://exbin.exbin.org/editor/  
 
 Published as:   
 
 Screenshot
 ----------
 
-![XBUP-Plugin Screenshot](images/intellij-screenshot.png?raw=true)
+![ExBin-Plugin Screenshot](images/intellij-screenshot.png?raw=true)
 
 Features
 --------
