@@ -1,0 +1,46 @@
+<!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
+<idea-plugin>
+    <!-- Unique identifier of the plugin. It should be FQN. It cannot be changed between the plugin versions. -->
+    <id>org.exbin.tool.intellij</id>
+    <version>0.2.0.snapshot</version>
+
+    <!-- Public plugin name should be written in Title Case.
+         Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-name -->
+    <name>ExBin Tools</name>
+
+    <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
+    <vendor email="exbinproject@gmail.com" url="https://exbin.org">ExBin Project</vendor>
+
+    <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
+         Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
+         Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
+    <description><![CDATA[
+<p>Experimental support for ExBin project.</p>
+
+<h1>Links</h1>
+Homepage: <a href="https://xbup.exbin.org/editor/">https://xbup.exbin.org/editor/</a><br/>
+Sources: <a href="https://github.com/exbin/exbin-intellij-plugin">https://github.com/exbin/exbin-intellij-plugin</a>
+    ]]></description>
+
+
+    <change-notes><![CDATA[
+      Initial release.
+    ]]>
+    </change-notes>
+
+    <!-- please see https://plugins.jetbrains.com/docs/intellij/build-number-ranges.html for description -->
+    <idea-version since-build="232.1"/>
+
+    <!-- Product and plugin compatibility requirements.
+         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
+    <depends>com.intellij.modules.platform</depends>
+
+    <!-- Extension points defined by the plugin.
+         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
+    <extensions defaultExtensionNs="com.intellij">
+        <fileType name="XBUP File" implementationClass="org.exbin.tool.intellij.XbupFileType" fieldName="INSTANCE" language="" extensions="xb"/>
+        <virtualFileSystem implementationClass="org.exbin.tool.intellij.XbupFileSystem" key="xbup" physical="false"/>
+        <fileEditorProvider implementation="org.exbin.tool.intellij.XbupFileEditorProvider"/>
+        <fileEditorProvider implementation="org.exbin.tool.intellij.XbupNativeFileEditorProvider"/>
+    </extensions>
+</idea-plugin>
