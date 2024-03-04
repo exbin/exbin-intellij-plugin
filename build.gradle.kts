@@ -49,14 +49,18 @@ tasks {
 val xbupLibraryVersion = "0.2.2"
 val xbupDataLibraryVersion = "0.2.2"
 val exbinFrameworkLibraryVersion = "0.3.0-SNAPSHOT"
+val xbupToolsLibraryVersion = "0.3.0-SNAPSHOT"
 val binedLibraryVersion = "0.2.1"
 val binaryDataLibraryVersion = "0.2.1"
+val binedAppLibraryVersion = "0.3.0-SNAPSHOT"
 
-fun xbupLibrary(libName: String): String = if (libName.endsWith("-SNAPSHOT")) ":${libName}-${xbupLibraryVersion}" else "org.exbin.xbup:${libName}:${xbupLibraryVersion}"
-fun xbupDataLibrary(libName: String): String = if (libName.endsWith("-SNAPSHOT")) ":${libName}-${xbupDataLibraryVersion}" else "org.exbin.xbup.data:${libName}:${xbupDataLibraryVersion}"
-fun exbinFrameworkLibrary(libName: String): String = if (libName.endsWith("-SNAPSHOT")) ":${libName}-${exbinFrameworkLibraryVersion}" else "org.exbin.xbup.data:${libName}:${exbinFrameworkLibraryVersion}"
-fun binedLibrary(libName: String): String = if (libName.endsWith("-SNAPSHOT")) ":${libName}-${binedLibraryVersion}" else "org.exbin.bined:${libName}:${binedLibraryVersion}"
-fun binaryDataLibrary(libName: String): String = if (libName.endsWith("-SNAPSHOT")) ":${libName}-${binaryDataLibraryVersion}" else "org.exbin.auxiliary:${libName}:${binaryDataLibraryVersion}"
+fun xbupLibrary(libName: String): String = if (xbupLibraryVersion.endsWith("-SNAPSHOT")) ":${libName}-${xbupLibraryVersion}" else "org.exbin.xbup:${libName}:${xbupLibraryVersion}"
+fun xbupDataLibrary(libName: String): String = if (xbupDataLibraryVersion.endsWith("-SNAPSHOT")) ":${libName}-${xbupDataLibraryVersion}" else "org.exbin.xbup.data:${libName}:${xbupDataLibraryVersion}"
+fun exbinFrameworkLibrary(libName: String): String = if (exbinFrameworkLibraryVersion.endsWith("-SNAPSHOTX")) ":${libName}-${exbinFrameworkLibraryVersion}" else "org.exbin.framework:${libName}:${exbinFrameworkLibraryVersion}"
+fun xbupToolsLibrary(libName: String): String = if (xbupToolsLibraryVersion.endsWith("-SNAPSHOTX")) ":${libName}-${xbupToolsLibraryVersion}" else "org.exbin.framework:${libName}:${xbupToolsLibraryVersion}"
+fun binedLibrary(libName: String): String = if (binedLibraryVersion.endsWith("-SNAPSHOT")) ":${libName}-${binedLibraryVersion}" else "org.exbin.bined:${libName}:${binedLibraryVersion}"
+fun binedAppLibrary(libName: String): String = if (binedAppLibraryVersion.endsWith("-SNAPSHOTX")) ":${libName}-${binedAppLibraryVersion}" else "org.exbin.framework:${libName}:${binedAppLibraryVersion}"
+fun binaryDataLibrary(libName: String): String = if (binaryDataLibraryVersion.endsWith("-SNAPSHOT")) ":${libName}-${binaryDataLibraryVersion}" else "org.exbin.auxiliary:${libName}:${binaryDataLibraryVersion}"
 
 repositories {
     flatDir {
@@ -77,6 +81,34 @@ dependencies {
     implementation(xbupDataLibrary("xbup-data-audio"))
     implementation(xbupDataLibrary("xbup-data-visual"))
     implementation(exbinFrameworkLibrary("exbin-framework"))
+    implementation(exbinFrameworkLibrary("exbin-framework"))
+    implementation(exbinFrameworkLibrary("exbin-framework-basic"))
+    implementation(exbinFrameworkLibrary("exbin-framework-frame"))
+    implementation(exbinFrameworkLibrary("exbin-framework-ui"))
+    implementation(exbinFrameworkLibrary("exbin-framework-component"))
+    implementation(exbinFrameworkLibrary("exbin-framework-data"))
+    implementation(exbinFrameworkLibrary("exbin-framework-window"))
+    implementation(exbinFrameworkLibrary("exbin-framework-action"))
+    implementation(exbinFrameworkLibrary("exbin-framework-file"))
+    implementation(exbinFrameworkLibrary("exbin-framework-editor"))
+    implementation(exbinFrameworkLibrary("exbin-framework-about"))
+    implementation(exbinFrameworkLibrary("exbin-framework-operation-undo"))
+    implementation(exbinFrameworkLibrary("exbin-framework-action-popup"))
+    implementation(exbinFrameworkLibrary("exbin-framework-help"))
+    implementation(exbinFrameworkLibrary("exbin-framework-help-online"))
+    implementation(exbinFrameworkLibrary("exbin-framework-addon-update"))
+    implementation(exbinFrameworkLibrary("exbin-framework-options"))
+    implementation(exbinFrameworkLibrary("exbin-framework-preferences-api"))
+    implementation(exbinFrameworkLibrary("exbin-framework-preferences"))
+    implementation(exbinFrameworkLibrary("exbin-framework-language-api"))
+    implementation(exbinFrameworkLibrary("exbin-framework-language"))
+    implementation(exbinFrameworkLibrary("exbin-framework-editor-text"))
+    implementation(exbinFrameworkLibrary("exbin-framework-client"))
+    implementation(xbupToolsLibrary("exbin-framework-xbup-catalog"))
+    implementation(xbupToolsLibrary("exbin-framework-editor-xbup"))
+    implementation(binedAppLibrary("exbin-framework-bined"))
+    implementation(binedAppLibrary("exbin-framework-bined-inspector"))
+    implementation(binedAppLibrary("exbin-framework-bined-objectdata"))
     implementation(binedLibrary("bined-core"))
     implementation(binedLibrary("bined-extended"))
     implementation(binedLibrary("bined-highlight-swing"))
@@ -87,5 +119,6 @@ dependencies {
     implementation(binaryDataLibrary("binary_data"))
     implementation(binaryDataLibrary("binary_data-paged"))
     implementation(binaryDataLibrary("binary_data-delta"))
+    implementation(":flatlaf-desktop-3.2")
     compileOnly(":jsr305-2.0.1")
 }

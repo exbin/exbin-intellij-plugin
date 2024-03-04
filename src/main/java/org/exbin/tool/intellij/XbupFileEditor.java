@@ -122,7 +122,7 @@ public class XbupFileEditor implements FileEditor, DumbAware {
     @Nonnull
     @Override
     public JComponent getComponent() {
-        return virtualFile.getEditorPanel();
+        return virtualFile.getComponent();
     }
 
     @Nullable

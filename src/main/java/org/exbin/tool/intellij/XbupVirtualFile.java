@@ -20,10 +20,12 @@ import com.intellij.openapi.project.DumbAware;
 import com.intellij.openapi.vfs.LocalFileSystem;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.vfs.VirtualFileSystem;
+import org.exbin.framework.editor.xbup.viewer.XbupFileHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Nonnull;
+import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.*;
 import java.io.IOException;
 import java.io.InputStream;
@@ -34,13 +36,14 @@ import java.io.OutputStream;
  *
  * @author ExBin Project (https://exbin.org)
  */
+@ParametersAreNonnullByDefault
 public class XbupVirtualFile extends VirtualFile implements DumbAware {
 
     public static final String PATH_PREFIX = "xbup://";
 
     private final VirtualFile parentFile;
     private String displayName;
-//    private XbupFileHandler editorFile;
+    private XbupFileHandler editorFile;
     private boolean closed = false;
 
     public XbupVirtualFile(VirtualFile parentFile) {
@@ -58,7 +61,7 @@ public class XbupVirtualFile extends VirtualFile implements DumbAware {
         }
     }
 
-/*    @Nonnull
+    @Nonnull
     public XbupFileHandler getEditorFile() {
         if (editorFile == null) {
             editorFile = new XbupFileHandler();
@@ -66,10 +69,10 @@ public class XbupVirtualFile extends VirtualFile implements DumbAware {
 
         return editorFile;
     }
-*/
+
     @Nonnull
-    public JPanel getEditorPanel() {
-        return new JPanel(); // TODO getEditorFile().getComponent();
+    public JComponent getComponent() {
+        return getEditorFile().getComponent();
     }
 
     @NotNull

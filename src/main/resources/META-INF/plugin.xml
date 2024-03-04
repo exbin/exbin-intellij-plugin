@@ -22,7 +22,6 @@ Homepage: <a href="https://xbup.exbin.org/editor/">https://xbup.exbin.org/editor
 Sources: <a href="https://github.com/exbin/exbin-intellij-plugin">https://github.com/exbin/exbin-intellij-plugin</a>
     ]]></description>
 
-
     <change-notes><![CDATA[
       Initial release.
     ]]>
@@ -38,9 +37,19 @@ Sources: <a href="https://github.com/exbin/exbin-intellij-plugin">https://github
     <!-- Extension points defined by the plugin.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
     <extensions defaultExtensionNs="com.intellij">
+        <postStartupActivity implementation="org.exbin.tool.intellij.ExBinPluginStartupActivity"/>
         <fileType name="XBUP File" implementationClass="org.exbin.tool.intellij.XbupFileType" fieldName="INSTANCE" language="" extensions="xb"/>
         <virtualFileSystem implementationClass="org.exbin.tool.intellij.XbupFileSystem" key="xbup" physical="false"/>
         <fileEditorProvider implementation="org.exbin.tool.intellij.XbupFileEditorProvider"/>
         <fileEditorProvider implementation="org.exbin.tool.intellij.XbupNativeFileEditorProvider"/>
+        ExBinPluginStartupActivity
     </extensions>
+
+    <actions>
+        <action id="BinEdEditor.OpenInBinaryEditorAction" class="org.exbin.tool.intellij.ContextOpenInXbEditorAction"
+                text="Binary Editor (BinEd Plugin)" description="Opens file in XB editor"
+                icon="/images/icon.png">
+            <add-to-group group-id="RevealGroup" anchor="last"/>
+        </action>
+    </actions>
 </idea-plugin>
