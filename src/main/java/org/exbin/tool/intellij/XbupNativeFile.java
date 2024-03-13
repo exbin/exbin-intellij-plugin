@@ -28,16 +28,22 @@ import com.intellij.util.LocalTimeCounter;
 import com.intellij.util.messages.MessageBusConnection;
 import org.exbin.bined.EditMode;
 import org.exbin.bined.swing.extended.ExtCodeArea;
+import org.exbin.framework.App;
+import org.exbin.framework.client.api.ClientModuleApi;
+import org.exbin.framework.editor.xbup.viewer.XbupFileHandler;
+import org.exbin.tool.intellij.gui.XbupFilePanel;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import java.awt.event.ActionEvent;
+import java.io.File;
 import java.util.List;
 
 /**
@@ -45,13 +51,15 @@ import java.util.List;
  *
  * @author ExBin Project (https://exbin.org)
  */
+@ParametersAreNonnullByDefault
 public class XbupNativeFile {
 
     public static final String ACTION_CLIPBOARD_CUT = "cut-to-clipboard";
     public static final String ACTION_CLIPBOARD_COPY = "copy-to-clipboard";
     public static final String ACTION_CLIPBOARD_PASTE = "paste-from-clipboard";
 
-//    private final XbupFileHandler fileHandler;
+    private final XbupFilePanel filePanel = new XbupFilePanel();
+    private final XbupFileHandler fileHandler;
 
     private boolean opened = false;
     private VirtualFile virtualFile;
@@ -60,7 +68,11 @@ public class XbupNativeFile {
 
     public XbupNativeFile(VirtualFile virtualFile) {
         this.virtualFile = virtualFile;
-//        fileHandler = new XbupFileHandler();
+        fileHandler = new XbupFileHandler();
+        filePanel.setFileHandler(fileHandler);
+        final ClientModuleApi clientModule = App.getModule(ClientModuleApi.class);
+        fileHandler.setCatalog(clientModule.getCatalog());
+        fileHandler.setPluginRepository(clientModule.getPluginRepository());
 //        fileHandler.setFileApi(this);
 //        fileHandler.setFileHandlingMode(FileHandlingMode.NATIVE);
 //        fileHandler.setUndoHandler(undoHandler);
@@ -103,8 +115,8 @@ public class XbupNativeFile {
     }
 
     @Nonnull
-    public JPanel getPanel() {
-        return new JPanel(); // TODO fileHandler.getComponent();
+    public JComponent getPanel() {
+        return filePanel;
     }
 
     public void openFile(VirtualFile virtualFile) {
@@ -113,6 +125,7 @@ public class XbupNativeFile {
 //        ExtCodeArea codeArea = fileHandler.getCodeArea();
 //        codeArea.setContentData(new XbupFileDataWrapper(virtualFile));
 //        codeArea.setEditMode(editable ? EditMode.EXPANDING : EditMode.READ_ONLY);
+        fileHandler.loadFromFile(new File(virtualFile.getPath()).toURI(), null);
 
         opened = true;
 //        documentOriginalSize = codeArea.getDataSize();

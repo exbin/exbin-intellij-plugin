@@ -20,16 +20,23 @@ import com.intellij.openapi.project.DumbAware;
 import com.intellij.openapi.vfs.LocalFileSystem;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.vfs.VirtualFileSystem;
+import org.exbin.framework.App;
+import org.exbin.framework.client.api.ClientModuleApi;
 import org.exbin.framework.editor.xbup.viewer.XbupFileHandler;
+import org.exbin.framework.xbup.catalog.XBFileType;
+import org.exbin.tool.intellij.gui.XbupFilePanel;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.swing.*;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 /**
  * Virtual file for binary editor.
@@ -43,7 +50,8 @@ public class XbupVirtualFile extends VirtualFile implements DumbAware {
 
     private final VirtualFile parentFile;
     private String displayName;
-    private XbupFileHandler editorFile;
+    private final XbupFilePanel filePanel = new XbupFilePanel();
+    private XbupFileHandler editorFile = new XbupFileHandler();
     private boolean closed = false;
 
     public XbupVirtualFile(VirtualFile parentFile) {
@@ -59,20 +67,16 @@ public class XbupVirtualFile extends VirtualFile implements DumbAware {
         } else {
             this.displayName = "";
         }
-    }
-
-    @Nonnull
-    public XbupFileHandler getEditorFile() {
-        if (editorFile == null) {
-            editorFile = new XbupFileHandler();
-        }
-
-        return editorFile;
+        final ClientModuleApi clientModule = App.getModule(ClientModuleApi.class);
+        editorFile.setCatalog(clientModule.getCatalog());
+        editorFile.setPluginRepository(clientModule.getPluginRepository());
+        editorFile.loadFromFile(new File(path).toURI(), null);
+        filePanel.setFileHandler(editorFile);
     }
 
     @Nonnull
     public JComponent getComponent() {
-        return getEditorFile().getComponent();
+        return filePanel;
     }
 
     @NotNull

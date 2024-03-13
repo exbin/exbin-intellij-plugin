@@ -27,6 +27,8 @@ import org.exbin.framework.ModuleProvider;
 import org.exbin.framework.action.ActionModule;
 import org.exbin.framework.action.api.ActionModuleApi;
 import org.exbin.framework.bined.BinedModule;
+import org.exbin.framework.client.ClientModule;
+import org.exbin.framework.client.api.ClientModuleApi;
 import org.exbin.framework.component.ComponentModule;
 import org.exbin.framework.component.api.ComponentModuleApi;
 import org.exbin.framework.data.DataModule;
@@ -53,11 +55,13 @@ import org.exbin.framework.ui.UiModule;
 import org.exbin.framework.ui.api.UiModuleApi;
 import org.exbin.framework.window.WindowModule;
 import org.exbin.framework.window.api.WindowModuleApi;
+import org.exbin.xbup.core.catalog.XBACatalog;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
+import javax.persistence.Persistence;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -152,6 +156,7 @@ public final class ExBinPluginStartupActivity implements ProjectActivity, Startu
             modules.put(HelpModuleApi.class, new HelpModule());
             modules.put(BinedModule.class, new BinedModule());
             modules.put(EditorXbupModule.class, new EditorXbupModule());
+            modules.put(ClientModuleApi.class, new ClientModule());
         }
 
         private void init() {
@@ -169,6 +174,25 @@ public final class ExBinPluginStartupActivity implements ProjectActivity, Startu
             binaryModule.setEditorProvider(editorProvider);
             binaryModule.registerCodeAreaPopupMenu();
 
+            ClientModuleApi clientModule = App.getModule(ClientModuleApi.class);
+//            Persistence.
+
+//            clientModule.addClientConnectionListener(xbupEditorModule.getClientConnectionListener());
+            clientModule.addPluginRepositoryListener((pluginRepository) -> {
+                xbupEditorModule.setPluginRepository(pluginRepository);
+            });
+            Thread connectionThread = new Thread(() -> {
+                if (!clientModule.connectToService()) {
+                    if (!clientModule.runLocalCatalog()) {
+                        clientModule.useBuildInCatalog();
+                    }
+                }
+
+                XBACatalog catalog = clientModule.getCatalog();
+                xbupEditorModule.setCatalog(catalog);
+            });
+
+            connectionThread.start();
         }
 
         @Override

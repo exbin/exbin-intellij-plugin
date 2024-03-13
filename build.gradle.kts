@@ -119,6 +119,10 @@ dependencies {
     implementation(binaryDataLibrary("binary_data"))
     implementation(binaryDataLibrary("binary_data-paged"))
     implementation(binaryDataLibrary("binary_data-delta"))
+    implementation("org.mariadb.jdbc:mariadb-java-client:2.6.2")
+    implementation("org.eclipse.persistence:javax.persistence:2.2.1")
+//    compileOnly(group = "com.google.code.findbugs", name = "jsr305", version = "3.0.2")
+    implementation("org.eclipse.persistence:eclipselink:2.7.7")
     implementation(":flatlaf-desktop-3.2")
     compileOnly(":jsr305-2.0.1")
 }
