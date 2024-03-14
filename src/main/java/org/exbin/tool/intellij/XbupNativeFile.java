@@ -59,7 +59,7 @@ public class XbupNativeFile {
     public static final String ACTION_CLIPBOARD_PASTE = "paste-from-clipboard";
 
     private final XbupFilePanel filePanel = new XbupFilePanel();
-    private final XbupFileHandler fileHandler;
+    private final FileHandler fileHandler = new FileHandler();
 
     private boolean opened = false;
     private VirtualFile virtualFile;
@@ -68,7 +68,6 @@ public class XbupNativeFile {
 
     public XbupNativeFile(VirtualFile virtualFile) {
         this.virtualFile = virtualFile;
-        fileHandler = new XbupFileHandler();
         filePanel.setFileHandler(fileHandler);
         final ClientModuleApi clientModule = App.getModule(ClientModuleApi.class);
         fileHandler.setCatalog(clientModule.getCatalog());

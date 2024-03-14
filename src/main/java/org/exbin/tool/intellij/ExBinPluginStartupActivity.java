@@ -15,10 +15,12 @@
  */
 package org.exbin.tool.intellij;
 
+import com.intellij.openapi.progress.ProgressManager;
 import com.intellij.openapi.project.DumbAware;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.startup.ProjectActivity;
 import com.intellij.openapi.startup.StartupActivity;
+import io.ktor.http.ContentType;
 import kotlin.Unit;
 import kotlin.coroutines.Continuation;
 import org.exbin.framework.App;
@@ -173,26 +175,6 @@ public final class ExBinPluginStartupActivity implements ProjectActivity, Startu
             BinedModule binaryModule = App.getModule(BinedModule.class);
             binaryModule.setEditorProvider(editorProvider);
             binaryModule.registerCodeAreaPopupMenu();
-
-            ClientModuleApi clientModule = App.getModule(ClientModuleApi.class);
-//            Persistence.
-
-//            clientModule.addClientConnectionListener(xbupEditorModule.getClientConnectionListener());
-            clientModule.addPluginRepositoryListener((pluginRepository) -> {
-                xbupEditorModule.setPluginRepository(pluginRepository);
-            });
-            Thread connectionThread = new Thread(() -> {
-                if (!clientModule.connectToService()) {
-                    if (!clientModule.runLocalCatalog()) {
-                        clientModule.useBuildInCatalog();
-                    }
-                }
-
-                XBACatalog catalog = clientModule.getCatalog();
-                xbupEditorModule.setCatalog(catalog);
-            });
-
-            connectionThread.start();
         }
 
         @Override

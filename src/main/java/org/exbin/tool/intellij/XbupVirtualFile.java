@@ -25,6 +25,7 @@ import org.exbin.framework.client.api.ClientModuleApi;
 import org.exbin.framework.editor.xbup.viewer.XbupFileHandler;
 import org.exbin.framework.xbup.catalog.XBFileType;
 import org.exbin.tool.intellij.gui.XbupFilePanel;
+import org.exbin.xbup.core.catalog.XBACatalog;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -51,7 +52,7 @@ public class XbupVirtualFile extends VirtualFile implements DumbAware {
     private final VirtualFile parentFile;
     private String displayName;
     private final XbupFilePanel filePanel = new XbupFilePanel();
-    private XbupFileHandler editorFile = new XbupFileHandler();
+    private FileHandler editorFile = new FileHandler();
     private boolean closed = false;
 
     public XbupVirtualFile(VirtualFile parentFile) {
