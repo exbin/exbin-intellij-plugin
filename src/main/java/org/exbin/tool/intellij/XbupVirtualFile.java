@@ -49,13 +49,16 @@ public class XbupVirtualFile extends VirtualFile implements DumbAware {
 
     public static final String PATH_PREFIX = "xbup://";
 
-    private final VirtualFile parentFile;
+    private VirtualFile parentFile;
     private String displayName;
     private final XbupFilePanel filePanel = new XbupFilePanel();
     private FileHandler editorFile = new FileHandler();
     private boolean closed = false;
 
-    public XbupVirtualFile(VirtualFile parentFile) {
+    public XbupVirtualFile() {
+    }
+
+    public void openVirtualFile(VirtualFile parentFile) {
         if (parentFile.getPath().startsWith(PATH_PREFIX)) {
             this.parentFile = LocalFileSystem.getInstance().findFileByPath(parentFile.getPath().substring(PATH_PREFIX.length()));
         } else {

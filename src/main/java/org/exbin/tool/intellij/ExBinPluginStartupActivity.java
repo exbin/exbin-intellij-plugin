@@ -172,6 +172,7 @@ public final class ExBinPluginStartupActivity implements ProjectActivity, Startu
 
             XbupIntelliJEditorProvider editorProvider = new XbupIntelliJEditorProvider();
             final EditorXbupModule xbupEditorModule = App.getModule(EditorXbupModule.class);
+            xbupEditorModule.setEditorProvider(editorProvider);
             BinedModule binaryModule = App.getModule(BinedModule.class);
             binaryModule.setEditorProvider(editorProvider);
             binaryModule.registerCodeAreaPopupMenu();

@@ -107,7 +107,8 @@ public class ContextOpenInXbEditorAction extends AnAction implements DumbAware {
 
     @Nonnull
     public static XbupVirtualFile openValidVirtualFile(Project project, VirtualFile virtualFile) {
-        XbupVirtualFile xbupVirtualFile = new XbupVirtualFile(virtualFile);
+        XbupVirtualFile xbupVirtualFile = new XbupVirtualFile();
+        xbupVirtualFile.openVirtualFile(virtualFile);
         OpenFileDescriptor descriptor = new OpenFileDescriptor(project, xbupVirtualFile, 0);
         FileEditorManager fileEditorManager = FileEditorManager.getInstance(project);
         List<FileEditor> editors = fileEditorManager.openEditor(descriptor, true);

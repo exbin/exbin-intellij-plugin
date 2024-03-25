@@ -15,19 +15,13 @@
  */
 package org.exbin.tool.intellij;
 
-import com.intellij.icons.AllIcons;
-import com.intellij.openapi.fileTypes.FileType;
-import com.intellij.openapi.vfs.VirtualFile;
 import org.exbin.framework.App;
 import org.exbin.framework.client.api.ClientModuleApi;
 import org.exbin.framework.editor.xbup.EditorXbupModule;
 import org.exbin.framework.editor.xbup.viewer.XbupFileHandler;
 import org.exbin.xbup.core.catalog.XBACatalog;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-import javax.swing.Icon;
 
 /**
  * File type for XBUP files.
@@ -56,17 +50,27 @@ public class FileHandler extends XbupFileHandler {
                 xbupEditorModule.setPluginRepository(pluginRepository);
             });
 
-            Thread connectionThread = new Thread(() -> {
-                if (!clientModule.connectToService()) {
-                    if (!clientModule.runLocalCatalog()) {
-                        clientModule.useBuildInCatalog();
-                    }
+            Thread catalogThread = new Thread(() -> {
+                clientModule.startLocalCatalog();
+            });
+            catalogThread.setContextClassLoader(clientModule.getClass().getClassLoader());
+            catalogThread.start();
+            try {
+                catalogThread.join();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+
+            Thread catalogUpdateThread = new Thread(() -> {
+                if (!clientModule.updateLocalCatalog()) {
+                    clientModule.useBuildInCatalog();
                 }
 
                 XBACatalog catalog = clientModule.getCatalog();
                 xbupEditorModule.setCatalog(catalog);
             });
-            connectionThread.start();
+            catalogUpdateThread.setContextClassLoader(clientModule.getClass().getClassLoader());
+            catalogUpdateThread.start();
         }
     }
 }

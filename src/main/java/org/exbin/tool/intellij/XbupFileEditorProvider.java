@@ -53,7 +53,8 @@ public class XbupFileEditorProvider implements FileEditorProvider, DumbAware {
         if (virtualFile instanceof XbupVirtualFile) {
             xbupVirtualFile = (XbupVirtualFile) virtualFile;
         } else {
-            xbupVirtualFile = new XbupVirtualFile(virtualFile);
+            xbupVirtualFile = new XbupVirtualFile();
+            xbupVirtualFile.openVirtualFile(virtualFile);
         }
 
         XbupFileEditor fileEditor = new XbupFileEditor(project, xbupVirtualFile);
