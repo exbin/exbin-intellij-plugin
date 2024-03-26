@@ -166,6 +166,12 @@ public final class ExBinPluginStartupActivity implements ProjectActivity, Startu
             preferencesModule.setupAppPreferences(ExBinIntelliJPlugin.class);
             Preferences preferences = preferencesModule.getAppPreferences();
 
+            FrameModuleApi frameModule = App.getModule(FrameModuleApi.class);
+            frameModule.createMainMenu();
+            ActionModuleApi actionModule = App.getModule(ActionModuleApi.class);
+            actionModule.registerMenuClipboardActions();
+            actionModule.registerToolBarClipboardActions();
+
             LanguageModuleApi languageModule = App.getModule(LanguageModuleApi.class);
             ResourceBundle bundle = languageModule.getBundle(ExBinIntelliJPlugin.class);
             languageModule.setAppBundle(bundle);
