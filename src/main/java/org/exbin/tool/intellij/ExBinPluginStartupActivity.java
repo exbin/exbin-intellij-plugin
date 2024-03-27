@@ -26,6 +26,8 @@ import kotlin.coroutines.Continuation;
 import org.exbin.framework.App;
 import org.exbin.framework.Module;
 import org.exbin.framework.ModuleProvider;
+import org.exbin.framework.about.AboutModule;
+import org.exbin.framework.about.api.AboutModuleApi;
 import org.exbin.framework.action.ActionModule;
 import org.exbin.framework.action.api.ActionModuleApi;
 import org.exbin.framework.bined.BinedModule;
@@ -159,6 +161,7 @@ public final class ExBinPluginStartupActivity implements ProjectActivity, Startu
             modules.put(BinedModule.class, new BinedModule());
             modules.put(EditorXbupModule.class, new EditorXbupModule());
             modules.put(ClientModuleApi.class, new ClientModule());
+            modules.put(AboutModuleApi.class, new AboutModule());
         }
 
         private void init() {
@@ -176,9 +179,17 @@ public final class ExBinPluginStartupActivity implements ProjectActivity, Startu
             ResourceBundle bundle = languageModule.getBundle(ExBinIntelliJPlugin.class);
             languageModule.setAppBundle(bundle);
 
+            AboutModuleApi aboutModule = App.getModule(AboutModuleApi.class);
+            aboutModule.registerDefaultMenuItem();
+            OptionsModuleApi optionsModule = App.getModule(OptionsModuleApi.class);
+            optionsModule.registerMenuAction();
+
             XbupIntelliJEditorProvider editorProvider = new XbupIntelliJEditorProvider();
             final EditorXbupModule xbupEditorModule = App.getModule(EditorXbupModule.class);
             xbupEditorModule.setEditorProvider(editorProvider);
+            xbupEditorModule.registerCatalogBrowserMenu();
+            xbupEditorModule.registerDocEditingMenuActions();
+            xbupEditorModule.registerDocEditingToolBarActions();
             BinedModule binaryModule = App.getModule(BinedModule.class);
             binaryModule.setEditorProvider(editorProvider);
             binaryModule.registerCodeAreaPopupMenu();
