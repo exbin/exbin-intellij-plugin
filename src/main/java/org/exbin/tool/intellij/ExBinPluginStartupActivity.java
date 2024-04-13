@@ -15,12 +15,15 @@
  */
 package org.exbin.tool.intellij;
 
-import com.intellij.openapi.progress.ProgressManager;
+import com.intellij.openapi.fileEditor.FileEditor;
+import com.intellij.openapi.fileEditor.FileEditorManagerEvent;
+import com.intellij.openapi.fileEditor.FileEditorManagerListener;
 import com.intellij.openapi.project.DumbAware;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.startup.ProjectActivity;
 import com.intellij.openapi.startup.StartupActivity;
-import io.ktor.http.ContentType;
+import com.intellij.util.messages.MessageBus;
+import com.intellij.util.messages.MessageBusConnection;
 import kotlin.Unit;
 import kotlin.coroutines.Continuation;
 import org.exbin.framework.App;
@@ -102,9 +105,26 @@ public final class ExBinPluginStartupActivity implements ProjectActivity, Startu
             App.setModuleProvider(appModuleProvider);
             appModuleProvider.init();
         }
-/*        MessageBus messageBus = project.getMessageBus();
+        MessageBus messageBus = project.getMessageBus();
         MessageBusConnection connect = messageBus.connect();
-        connect.subscribe(FileEditorManagerListener.Before.FILE_EDITOR_MANAGER, new FileEditorManagerListener.Before() {
+        connect.subscribe(FileEditorManagerListener.FILE_EDITOR_MANAGER, new FileEditorManagerListener() {
+            @Override
+            public void selectionChanged(@Nonnull FileEditorManagerEvent event) {
+                final EditorXbupModule xbupEditorModule = App.getModule(EditorXbupModule.class);
+                XbupIntelliJEditorProvider editorProvider =
+                        (XbupIntelliJEditorProvider) xbupEditorModule.getEditorProvider();
+                FileHandler activeFile = null;
+                FileEditor fileEditor = event.getNewEditor();
+                if (fileEditor instanceof XbupFileEditor) {
+                    activeFile = ((XbupFileEditor) fileEditor).getVirtualFile().getEditorFile();
+                } else if (fileEditor instanceof XbupNativeFileEditor) {
+                    activeFile = ((XbupNativeFileEditor) fileEditor).getNativeFile().getFileHandler();
+                }
+                editorProvider.setActiveFile(activeFile);
+            }
+        });
+
+        /* connect.subscribe(FileEditorManagerListener.Before.FILE_EDITOR_MANAGER, new FileEditorManagerListener.Before() {
             @Override
             public void beforeFileClosed(@Nonnull FileEditorManager source, @Nonnull VirtualFile file) {
                 if (file instanceof XbupVirtualFile && !((XbupVirtualFile) file).isMoved()

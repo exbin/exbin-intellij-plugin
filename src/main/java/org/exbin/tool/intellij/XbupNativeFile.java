@@ -167,6 +167,11 @@ public class XbupNativeFile {
         return virtualFile;
     }
 
+    @Nonnull
+    public FileHandler getFileHandler() {
+        return fileHandler;
+    }
+
     public JComponent getPreferredFocusedComponent() {
         return null;
     }

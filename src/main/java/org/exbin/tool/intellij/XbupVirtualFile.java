@@ -199,7 +199,12 @@ public class XbupVirtualFile extends VirtualFile implements DumbAware {
         this.closed = closed;
     }
 
-//    public JComponent getPreferredFocusedComponent() {
+    @Nonnull
+    public FileHandler getEditorFile() {
+        return editorFile;
+    }
+
+    //    public JComponent getPreferredFocusedComponent() {
 //        return getEditorFile().getPreferredFocusedComponent();
 //    }
 }

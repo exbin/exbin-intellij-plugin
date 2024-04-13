@@ -17,6 +17,7 @@ package org.exbin.tool.intellij;
 
 import org.exbin.framework.editor.xbup.viewer.XbupMultiEditorProvider;
 
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 /**
@@ -27,4 +28,18 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 public class XbupIntelliJEditorProvider extends XbupMultiEditorProvider {
 
+    private FileHandler activeFileOverride = null;
+
+    public XbupIntelliJEditorProvider() {
+    }
+
+    public void setActiveFile(@Nullable FileHandler fileHandler) {
+        activeFileOverride = fileHandler;
+        activeFileChanged();
+    }
+
+    @Override
+    public void updateActiveFile() {
+        activeFile = activeFileOverride;
+    }
 }
