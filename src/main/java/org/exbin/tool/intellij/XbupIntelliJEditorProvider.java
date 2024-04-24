@@ -38,7 +38,6 @@ public class XbupIntelliJEditorProvider extends XbupMultiEditorProvider {
         activeFileChanged();
     }
 
-    @Override
     public void updateActiveFile() {
         activeFile = activeFileOverride;
     }

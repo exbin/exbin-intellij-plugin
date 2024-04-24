@@ -22,6 +22,8 @@ import com.intellij.openapi.fileEditor.*;
 import com.intellij.openapi.project.DumbAware;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Key;
+import com.intellij.openapi.util.UserDataHolder;
+import com.intellij.openapi.util.UserDataHolderBase;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.vfs.VirtualFileSystem;
 import com.intellij.util.messages.MessageBus;
@@ -46,6 +48,7 @@ import java.io.OutputStream;
 public class XbupFileEditor implements FileEditor, DumbAware {
 
     private final Project project;
+    private final UserDataHolder userDataHolder = new UserDataHolderBase();
 
     private final PropertyChangeSupport propertyChangeSupport;
     private String displayName;
@@ -197,11 +200,12 @@ public class XbupFileEditor implements FileEditor, DumbAware {
     @Nullable
     @Override
     public <T> T getUserData(Key<T> key) {
-        return null;
+        return userDataHolder.getUserData(key);
     }
 
     @Override
     public <T> void putUserData(Key<T> key, @Nullable T value) {
+        userDataHolder.putUserData(key, value);
     }
 
     public void setDisplayName(String displayName) {
