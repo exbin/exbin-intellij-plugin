@@ -25,6 +25,7 @@ tasks {
     withType<JavaCompile> {
         sourceCompatibility = "17"
         targetCompatibility = "17"
+        options.compilerArgs = options.compilerArgs + "-Xlint:unchecked" + "-Xlint:deprecation"
     }
 //    withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
 //        kotlinOptions.jvmTarget = "17"
@@ -47,20 +48,20 @@ tasks {
 }
 
 val xbupLibraryVersion = "0.2.2"
-val xbupDataLibraryVersion = "0.2.2"
+val xbupDataLibraryVersion = "0.3.0-SNAPSHOT"
 val exbinFrameworkLibraryVersion = "0.3.0-SNAPSHOT"
 val xbupToolsLibraryVersion = "0.3.0-SNAPSHOT"
-val binedLibraryVersion = "0.2.1"
-val binaryDataLibraryVersion = "0.2.1"
+val binedLibraryVersion = "0.3.0-SNAPSHOT"
+val binaryDataLibraryVersion = "0.2.2-SNAPSHOT"
 val binedAppLibraryVersion = "0.3.0-SNAPSHOT"
 
 fun xbupLibrary(libName: String): String = if (xbupLibraryVersion.endsWith("-SNAPSHOT")) ":${libName}-${xbupLibraryVersion}" else "org.exbin.xbup:${libName}:${xbupLibraryVersion}"
-fun xbupDataLibrary(libName: String): String = if (xbupDataLibraryVersion.endsWith("-SNAPSHOT")) ":${libName}-${xbupDataLibraryVersion}" else "org.exbin.xbup.data:${libName}:${xbupDataLibraryVersion}"
+fun xbupDataLibrary(libName: String): String = if (xbupDataLibraryVersion.endsWith("-SNAPSHOTX")) ":${libName}-${xbupDataLibraryVersion}" else "org.exbin.xbup.data:${libName}:${xbupDataLibraryVersion}"
 fun exbinFrameworkLibrary(libName: String): String = if (exbinFrameworkLibraryVersion.endsWith("-SNAPSHOTX")) ":${libName}-${exbinFrameworkLibraryVersion}" else "org.exbin.framework:${libName}:${exbinFrameworkLibraryVersion}"
 fun xbupToolsLibrary(libName: String): String = if (xbupToolsLibraryVersion.endsWith("-SNAPSHOTX")) ":${libName}-${xbupToolsLibraryVersion}" else "org.exbin.framework:${libName}:${xbupToolsLibraryVersion}"
-fun binedLibrary(libName: String): String = if (binedLibraryVersion.endsWith("-SNAPSHOT")) ":${libName}-${binedLibraryVersion}" else "org.exbin.bined:${libName}:${binedLibraryVersion}"
+fun binedLibrary(libName: String): String = if (binedLibraryVersion.endsWith("-SNAPSHOTX")) ":${libName}-${binedLibraryVersion}" else "org.exbin.bined:${libName}:${binedLibraryVersion}"
 fun binedAppLibrary(libName: String): String = if (binedAppLibraryVersion.endsWith("-SNAPSHOTX")) ":${libName}-${binedAppLibraryVersion}" else "org.exbin.framework:${libName}:${binedAppLibraryVersion}"
-fun binaryDataLibrary(libName: String): String = if (binaryDataLibraryVersion.endsWith("-SNAPSHOT")) ":${libName}-${binaryDataLibraryVersion}" else "org.exbin.auxiliary:${libName}:${binaryDataLibraryVersion}"
+fun binaryDataLibrary(libName: String): String = if (binaryDataLibraryVersion.endsWith("-SNAPSHOTX")) ":${libName}-${binaryDataLibraryVersion}" else "org.exbin.auxiliary:${libName}:${binaryDataLibraryVersion}"
 
 repositories {
     flatDir {
@@ -111,12 +112,12 @@ dependencies {
     implementation(binedAppLibrary("exbin-framework-bined-inspector"))
     implementation(binedAppLibrary("exbin-framework-bined-objectdata"))
     implementation(binedLibrary("bined-core"))
-    implementation(binedLibrary("bined-extended"))
+    implementation(binedLibrary("bined-section"))
     implementation(binedLibrary("bined-highlight-swing"))
     implementation(binedLibrary("bined-operation"))
     implementation(binedLibrary("bined-operation-swing"))
     implementation(binedLibrary("bined-swing"))
-    implementation(binedLibrary("bined-swing-extended"))
+    implementation(binedLibrary("bined-swing-section"))
     implementation(binaryDataLibrary("binary_data"))
     implementation(binaryDataLibrary("binary_data-paged"))
     implementation(binaryDataLibrary("binary_data-delta"))

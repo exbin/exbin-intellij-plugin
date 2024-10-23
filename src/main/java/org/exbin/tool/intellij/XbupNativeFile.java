@@ -27,7 +27,6 @@ import com.intellij.openapi.vfs.newvfs.events.VFileEvent;
 import com.intellij.util.LocalTimeCounter;
 import com.intellij.util.messages.MessageBusConnection;
 import org.exbin.bined.EditMode;
-import org.exbin.bined.swing.extended.ExtCodeArea;
 import org.exbin.framework.App;
 import org.exbin.framework.client.api.ClientModuleApi;
 import org.exbin.framework.editor.xbup.viewer.XbupFileHandler;
